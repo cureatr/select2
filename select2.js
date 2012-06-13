@@ -473,7 +473,8 @@
                 id: function (e) { return e.id; },
                 matcher: function(term, text) {
                     return text.toUpperCase().indexOf(term.toUpperCase()) >= 0;
-                }
+                },
+                selectCallback: function(data) { return true; }
             }, opts);
 
             if (typeof(opts.id) !== "function") {
@@ -1309,6 +1310,13 @@
         },
 
         onSelect: function (data) {
+
+            // only add if the selectCallback returns true
+            if (!this.opts.selectCallback(data)) {
+                // no-op
+                return;
+            }
+
             this.addSelectedChoice(data);
             if (this.select) { this.postprocessResults(); }
 
