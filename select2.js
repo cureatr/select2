@@ -2284,6 +2284,11 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // multi
         onSelect: function (data, options) {
+            // only add if selectcallback returns true
+            if(!this.opts.selectCallback(data)) {
+                // no-op
+                return;
+            }
             this.addSelectedChoice(data);
 
             this.opts.element.trigger({ type: "selected", val: this.id(data), choice: data });
@@ -2693,7 +2698,9 @@ the specific language governing permissions and limitations under the Apache Lic
         blurOnChange: false,
         selectOnBlur: false,
         adaptContainerCssClass: function(c) { return c; },
-        adaptDropdownCssClass: function(c) { return null; }
+        adaptDropdownCssClass: function(c) { return null; },
+        // port AK change 8257fba
+        selectCallback: function(data) { return true; }
     };
 
     // exports
